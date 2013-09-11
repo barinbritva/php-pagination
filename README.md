@@ -36,7 +36,7 @@ The parameters of library are an array with next indexes:
 		<tr>
 			<td>db_config (*)</td>
 			<td>array</td>
-			<td>Array of keys-parameters for database connection. Parameters description is <a href="#parameters-for-database-connection-db_config">here</a>. <b>Required, if not indicated parameter db</b>.</td>
+			<td>Array of keys-parameters for database connection. The parameter description is <a href="#the-parameter-for-database-connection-db_config">here</a>. <b>Required, if not indicated parameter db</b>.</td>
 		</tr>
 		<tr>
 			<td>table*</td>
@@ -126,12 +126,12 @@ The parameters of library are an array with next indexes:
 		<tr>
 			<td>pages_attributes</td>
 			<td>array</td>
-			<td>Array of attributes for navigation links. May include any html-attributes, for example: id, class, data-attributes. <i>No value by default</i>.</td>
+			<td>Array of attributes for navigation links. May include any html-attributes, for example: id, class, data-attributes. The parameter description is <a href="#the-parameter-of-attributes-for-navigation-links-pages_attributes">here</a>. <i>No value by default</i>.</td>
 		</tr>
 	</tbody>
 </table>
 
-## Parameters for database connection (db_config) ##
+## The parameter for database connection (db_config) ##
 
 This parameter contains next indexes:
 
