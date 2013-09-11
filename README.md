@@ -36,7 +36,7 @@ The parameters of library are an array with next indexes:
 		<tr>
 			<td>db_config (*)</td>
 			<td>array</td>
-			<td>Array of keys-parameters for database connection. Parameters description is <a href="#parameters-for-database-connection">here</a>. <b>Required, if not indicated parameter db</b>.</td>
+			<td>Array of keys-parameters for database connection. Parameters description is <a href="#parameters-for-database-connection-db_config">here</a>. <b>Required, if not indicated parameter db</b>.</td>
 		</tr>
 		<tr>
 			<td>table*</td>
