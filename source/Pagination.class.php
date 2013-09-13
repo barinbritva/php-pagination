@@ -495,7 +495,7 @@ class Pagination {
 		foreach ($where as $key=>$value)
 		{
 			$operator = $this->_hasOperator($key) ? ' ' : ' = ';
-			$value = is_null($value) ? '' : $dbConnect->quote($value);
+			$value = $this->_prepareValue($value);
 
 			$whereString .= $delimiter.$key.$operator.$value;
 			$delimiter = ' AND ';
@@ -507,7 +507,7 @@ class Pagination {
 	private function _hasOperator($string)
 	{
 		$string = trim($string);
-		if (preg_match("/(\s|<|>|!|=|is null|is not null)/i", $string))
+		if (preg_match("/(\s|<|>|!|=|is null|is not null|in|not in)/i", $string))
 		{
 			return true;
 		}
@@ -515,6 +515,34 @@ class Pagination {
 		{
 			return false;
 		}
+	}
+
+	private function _prepareValue($value)
+	{
+		$dbConnect = $this->_getDbConnect();
+
+		$valueType = strtolower(gettype($value));
+
+		switch($valueType)
+		{
+			case 'array':
+				foreach ($value as $item)
+				{
+					$valueEscaped[] = $dbConnect->quote($item);
+				}
+				$value = "(".implode(', ', $valueEscaped).")";
+			break;
+
+			case 'null':
+				$value = '';
+			break;
+
+			default:
+				$value = $dbConnect->quote($value);
+			break;
+		}
+
+		return $value;
 	}
 
 	private function _buildPages($forcibly=false)

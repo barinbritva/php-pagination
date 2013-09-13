@@ -178,13 +178,21 @@ This parameter is array of couples key-value, for example:
     array(
     	‘category_id’ => 1
     );
-Key may contains operators: : =, !=, >, <, <>, >=, <=, IS NULL, IS NOT NULL.
+
+Key may contains operators: : =, !=, >, <, <>, >=, <=, IS NULL, IS NOT NULL, IN, NOT IN.
 
 In case using operator IS NULL or IS NOT NULL, value must be null, for example:
 
     array(
     	‘author_id IS NOT NULL’ => null
     );
+
+In case using operator IN or NOT IN, value must be array, for example:
+
+    array(
+    	‘category_id IN => array(2, 3, 8)
+    );
+
 
 
 ## The parameter of attributes for navigation links (pages_attributes) ##
