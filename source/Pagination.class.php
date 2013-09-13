@@ -486,7 +486,6 @@ class Pagination {
 
 	private function _prepareWhere()
 	{
-		$dbConnect = $this->_getDbConnect();
 		$where = $this->_getWhere();
 
 		$whereString = empty($where) ? '' : ' WHERE ';
