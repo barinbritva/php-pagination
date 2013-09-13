@@ -56,17 +56,17 @@ The parameters of library are an array with next indexes:
 		<tr>
 			<td>limit</td>
 			<td>integer</td>
-			<td>Amount of records at page. May be indicate clearly - as number, or not clearly – as string, representing an index of configuration file, which store a value. <i>By default: 10</i>.</td>
+			<td>Amount of records at page. <i>By default: 10</i>.</td>
 		</tr>
 		<tr>
 			<td>pages_amount</td>
 			<td>integer or string</td>
-			<td>Amount of displaying pages on the right and on the left  from current page. May be indicate clearly - as number, or not clearly – as string, representing an index of configuration file, which store a value. <i>By default: 5</i>.</td>
+			<td>Amount of displaying pages on the right and on the left  from current page. <i>By default: 5</i>.</td>
 		</tr>
 		<tr>
 			<td>where</td>
 			<td>array</td>
-			<td>Array of criterias for records selection (like for Codeigniter Active Record). <i>No value by default</i>.</td>
+			<td>Array of criterias for records selection. The parameter description is <a href="#the-parameter-of-criterias-where">here</a>. <i>No value by default</i>.</td>
 		</tr>
 		<tr>
 			<td>with_pages</td>
@@ -170,6 +170,23 @@ This parameter contains next indexes:
 	</tbody>
 </table>
 
+## The parameter of criterias (where) ##
+
+This parameter is array of couples key-value, for example:
+
+    // Select records where category_id =1
+    array(
+    	‘category_id’ => 1
+    );
+Key may contains operators: : =, !=, >, <, <>, >=, <=, IS NULL, IS NOT NULL.
+
+In case using operator IS NULL or IS NOT NULL, value must be null, for example:
+
+    array(
+    	‘author_id IS NOT NULL’ => null
+    );
+
+
 ## The parameter of attributes for navigation links (pages_attributes) ##
 
 This parameter involves indexes of types pages with an array of the form: ‘html-attribute’ => ‘value of attribute’.
@@ -233,8 +250,6 @@ Example:
 
 ## Methods of library ##
 
-For initialization library needed to call one of two methods: get($parameters) or build($parameters). After that you can use other methods.
-
 <table>
 	<thead>
 		<tr>
@@ -244,7 +259,7 @@ For initialization library needed to call one of two methods: get($parameters) o
 	</thead>
 	<tbody>
 		<tr>
-			<td>build_pages()</td>
+			<td>buildPages()</td>
 			<td>Generates group of pages. Uses in case if during initialization parameter “with_pages” did set as false.</td>
 		</tr>
 		<tr>
@@ -252,43 +267,39 @@ For initialization library needed to call one of two methods: get($parameters) o
 			<td>Returns pagination as an array of data.</td>
 		</tr>
 		<tr>
-			<td>get_current_page()</td>
+			<td>getCurrentPage()</td>
 			<td>Returns number of current page.</td>
 		</tr>
 		<tr>
-			<td>get_limit()</td>
+			<td>getLimit()</td>
 			<td>Returns amount of records on page.</td>
 		</tr>
 		<tr>
-			<td>get_pages_amount()</td>
+			<td>getPagesAmount()</td>
 			<td>Returns amount of pages, displaying on the right and on the left from current.</td>
 		</tr>
 		<tr>
-			<td>get_start()</td>
+			<td>getStart()</td>
 			<td>Returns number of record, from which started show of page (numbering from zero).</td>
 		</tr>
 		<tr>
-			<td>get_total_records()</td>
+			<td>getTotalRecords()</td>
 			<td>Returns total amount of records in table, considering criterias, if they did set.</td>
 		</tr>
 		<tr>
-			<td>get_total_pages()</td>
+			<td>getTotalPages()</td>
 			<td>Returns total amount of pages.</td>
 		</tr>
 		<tr>
-			<td>get_pages()</td>
+			<td>getPages()</td>
 			<td>Returns an array of current group of pages.</td>
 		</tr>
 		<tr>
-			<td>get_pagination()</td>
-			<td>Returns pagination as an array of data.</td>
-		</tr>
-		<tr>
-			<td>get_start_show()</td>
+			<td>getStartShow()</td>
 			<td>Returns number of record, from which started show of page (numbering from one).</td>
 		</tr>
 		<tr>
-			<td>get_end_show()</td>
+			<td>getEndShow()</td>
 			<td>Returns number of last displayed record.</td>
 		</tr>
 	</tbody>
