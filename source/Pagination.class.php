@@ -297,7 +297,7 @@ class Pagination {
 		}
 		else
 		{
-			throw new Exception('Parameter "db" is required.');
+			throw new Exception('Parameter "db" or "db_config" is required.');
 		}
 
 		if (!empty($parameters['table']))
@@ -468,7 +468,7 @@ class Pagination {
 	{
 		$dbConnect = $this->_getDbConnect();
 
-		$query = "SELECT COUNT(id) AS total FROM ".$this->_getTable().$this->_prepareWhere();
+		$query = "SELECT COUNT(*) AS total FROM ".$this->_getTable().$this->_prepareWhere();
 		$result = $dbConnect->query($query);
 
 		$errorInfo = $dbConnect->errorInfo();
