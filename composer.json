@@ -2,7 +2,7 @@
 	"name": "barinbritva/pagination",
 	"type": "library",
 	"description": "Pagination library for any PHP-project",
-	"keywords": "pagination",
+	"keywords": ["pagination"],
 	"license": "MIT",
 	"authors": [
 		{
