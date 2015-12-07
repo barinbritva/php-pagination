@@ -17,14 +17,12 @@ class Pagination {
 	private $previousLabel = '<';
 	private $currentPage = 1;
 	private $recordLimit = 10;
+	private $totalRecords = 0;
 
 	private $start = 0;
-	private $totalRecords = 0;
 	private $totalPages = 0;
-	private $pages = array();
-
-	/** @var PageCounter */
-	private $pageCounter;
+	/** @var Page[] */
+	private $pages = [];
 
 
 	public function getUrl() {
@@ -141,7 +139,7 @@ class Pagination {
 		return $this->totalRecords;
 	}
 
-	private function setTotalRecords($total) {
+	public function setTotalRecords($total) {
 		$this->totalRecords = (int)$total;
 		return $this;
 	}
@@ -159,16 +157,12 @@ class Pagination {
 		return $this->pages;
 	}
 
-	public function __construct(PageCounter $pageCounter) {
-		$this->pageCounter = $pageCounter;
-	}
 
 	public function initialize() {
 		$page = $this->getCurrentPage();
 		$limit = $this->getRecordLimit();
 
-		$totalRecords = (int)$this->pageCounter->countTotalRecords();
-		$this->setTotalRecords($totalRecords);
+		$totalRecords = $this->getTotalRecords();
 
 		$totalPages = (int)(($totalRecords - 1) / $limit) + 1;
 
@@ -190,7 +184,14 @@ class Pagination {
 	}
 
 	public function getEndShow() {
-		return $this->getStart() + $this->getRecordLimit();
+		$totalRecords = $this->getTotalRecords();
+
+		$lastRecordOnPage = $this->getCurrentPage() * $this->getRecordLimit() - 1;
+		if ($lastRecordOnPage > $totalRecords) {
+			$lastRecordOnPage = $totalRecords;
+		}
+
+		return $this->getStart() + $lastRecordOnPage;
 	}
 
 	private function buildPages() {
@@ -210,18 +211,18 @@ class Pagination {
 
 		if ($page !== 1) {
 			if ($needFirstAndLastLinks) {
-				$this->appendPage($this->firstLabel, 1, 'first');
+				$this->appendPage($this->firstLabel, 1, Page::IS_FIRST);
 			}
 
 			if ($needGroupLinks) {
 				$previousGroup = $page - $pagesAmount - 1;
 				if ($previousGroup > 0) {
-					$this->appendPage($this->previousGroupLabel, $previousGroup, 'previous_group');
+					$this->appendPage($this->previousGroupLabel, $previousGroup, Page::IS_PREVIOUS_GROUP);
 				}
 			}
 
 			if ($needNextAndPreviousLinks) {
-				$this->appendPage($this->previousLabel, $page - 1, 'previous');
+				$this->appendPage($this->previousLabel, $page - 1, Page::IS_PREVIOUS);
 			}
 		}
 
@@ -230,56 +231,44 @@ class Pagination {
 				$numericPage = $page - $i;
 
 				if ($numericPage > 0) {
-					$this->appendPage($numericPage, $numericPage, 'numeric');
+					$this->appendPage($numericPage, $numericPage, Page::IS_NUMERIC);
 				}
 			}
 
-			if ($totalPages > 1) {
-				$this->appendPage($page, $page, 'current');
-			}
+
+			$this->appendPage($page, $page, [Page::IS_NUMERIC, Page::IS_CURRENT]);
 
 			for ($i = 1; $i <= $pagesAmount; $i++) {
 				$numericPage = $page + $i;
 
 				if ($numericPage <= $totalPages) {
-					$this->appendPage($numericPage, $numericPage, 'numeric');
+					$this->appendPage($numericPage, $numericPage, Page::IS_NUMERIC);
 				}
 			}
 		}
 
 		if ($page != $totalPages) {
 			if ($needNextAndPreviousLinks) {
-				$this->appendPage($this->nextLabel, $page + 1, 'next');
+				$this->appendPage($this->nextLabel, $page + 1, Page::IS_NEXT);
 			}
 
 			if ($needGroupLinks){
 				$nextGroup = $page + $pagesAmount + 1;
 				if ($nextGroup <= $totalPages) {
-					$this->appendPage($this->nextGroupLabel, $nextGroup, 'next_group');
+					$this->appendPage($this->nextGroupLabel, $nextGroup, Page::IS_NEXT_GROUP);
 				}
 			}
 
 			if ($needFirstAndLastLinks) {
-				$this->appendPage($this->lastLabel, $totalPages, 'last');
+				$this->appendPage($this->lastLabel, $totalPages, Page::IS_LAST);
 			}
 		}
 
 		return $this;
 	}
 
-	private function appendPage($caption, $href, $pageType) {
-		$item = array(
-			'caption' => $caption,
-			'href' => $this->getUrl().$href,
-			'is_'.$pageType => 1,
-		);
-
-		if ($pageType === 'current') {
-			$item['is_numeric'] = 1;
-		}
-
-		$this->pages[] = $item;
-
+	private function appendPage($caption, $number, $flags) {
+		$this->pages[] = new Page($caption, $number, $this->getUrl().$number, $flags);
 		return $this;
 	}
 }

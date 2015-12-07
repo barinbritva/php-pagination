@@ -1,19 +1,10 @@
-Pagination-Class
+php-pagination
 ================
 
-Pagination class for PHP (AJAX ready)
-
-## Warning ##
-
-Excuse my English. Original instruction written on Russian. I would be pleased, if anybody will translate it to correct English.
+Класс постраничной навигации для любого PHP-проекта
 
 ## Installation and usage ##
 
-- Copy the file Pagination.class.php to project directory;
-
-- Include the file there, when you want to use pagination (require_ince(‘path-to-class/Pagination.class.php’));
-
-- Initialize class ($pagination = new Pagination($parameters)).
 
 ## Parameters of library ##
 
@@ -131,131 +122,6 @@ The parameters of library are an array with next indexes:
 	</tbody>
 </table>
 
-## The parameter for database connection (db_config) ##
-
-This parameter contains next indexes:
-
-<table>
-	<thead>
-		<tr>
-			<th>Index of array</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>host *</td>
-			<td>DBMS host.</td>
-		</tr>
-		<tr>
-			<td>database *</td>
-			<td>Database name.</td>
-		</tr>
-		<tr>
-			<td>user *</td>
-			<td>User name.</td>
-		</tr>
-		<tr>
-			<td>password *</td>
-			<td>User password.</td>
-		</tr>
-		<tr>
-			<td>driver</td>
-			<td>DBMS driver. <i>By default: mysql</i>.</td>
-		</tr>
-		<tr>
-			<td>port</td>
-			<td>DBMS port. <i>No value by default</i>.</td>
-		</tr>
-	</tbody>
-</table>
-
-## The parameter of criterias (where) ##
-
-This parameter is array of couples key-value, for example:
-
-    // Select records where category_id =1
-    array(
-    	‘category_id’ => 1
-    );
-
-Key may contains operators: : =, !=, >, <, <>, >=, <=, IS NULL, IS NOT NULL, IN, NOT IN.
-
-In case using operator IS NULL or IS NOT NULL, value must be null, for example:
-
-    array(
-    	‘author_id IS NOT NULL’ => null
-    );
-
-In case using operator IN or NOT IN, value must be array, for example:
-
-    array(
-    	‘category_id IN => array(2, 3, 8)
-    );
-
-
-
-## The parameter of attributes for navigation links (pages_attributes) ##
-
-This parameter involves indexes of types pages with an array of the form: ‘html-attribute’ => ‘value of attribute’.
-
-Types of pages:
-
-<table>
-	<thead>
-		<tr>
-			<th>Index of array</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>first</td>
-			<td>For a link to first page.</td>
-		</tr>
-		<tr>
-			<td>previous_group</td>
-			<td>For a link to previous group of pages.</td>
-		</tr>
-		<tr>
-			<td>previous</td>
-			<td>For a link to previous page.</td>
-		</tr>
-		<tr>
-			<td>numeric</td>
-			<td>For a link to numeric pages.</td>
-		</tr>
-		<tr>
-			<td>current</td>
-			<td>For a link to current page. For this type of page will be appended parameters for numeric pages, if it exists.</td>
-		</tr>
-		<tr>
-			<td>next</td>
-			<td>For a link to next page.</td>
-		</tr>
-		<tr>
-			<td>next_group</td>
-			<td>For a link to next group of pages.</td>
-		</tr>
-		<tr>
-			<td>last</td>
-			<td>For a link to last page.</td>
-		</tr>
-	</tbody>
-</table>
-
-Example:
-
-    $parameters['pages_attributes'] = array(
-	    'first' => array(
-		    ‘id’ => ‘pagination-first’
-		    'data-first' => 1
-	    ),
-	    'numeric' => array(
-	    	'class’ => 'pagination-numeric'
-	    )
-    )
-
 ## Methods of library ##
 
 <table>
@@ -362,86 +228,85 @@ Array of pagination data contains next indexes:
 
 ## Array of pages group ##
 
-Index of pagination array “pages” is array, each element contains next indexes:
+Индекс массива навигации «pages» представляет собой массив, каждый элемент которого содержит объект <code>Page</code> со следующими методами:
 
 <table>
 	<thead>
 		<tr>
-			<th>Index</th>
-			<th>Contains</th>
+			<th>Метод</th>
+			<th>Тип возвращаемого заначения</th>
+			<th>Описание</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>caption</td>
-			<td>Contains caption for link to page</td>
+			<td>getCaption()</td>
+			<td>string</td>
+			<td>Возвращает надпись для ссылки на страницу.</td>
 		</tr>
 		<tr>
-			<td>href</td>
-			<td>Contains link to page.</td>
+			<td>getNumber()</td>
+			<td>integer</td>
+			<td>Возвращает номер страницы.</td>
 		</tr>
 		<tr>
-			<td>attributes</td>
-			<td>Contains array of html-attributes</td>
+			<td>getHref()</td>
+			<td>string</td>
+			<td>Возвращает ссылку на страницу.</td>
 		</tr>
+		<tr>
+            <td>isFirst()</td>
+            <td>boolean</td>
+            <td>Это ссылка на первую страницу.</td>
+        </tr>
+        <tr>
+            <td>isPreviousGroup()</td>
+            <td>boolean</td>
+            <td>Это ссылка на предыдущую группу страниц.</td>
+        </tr>
+        <tr>
+            <td>isPrevious()</td>
+            <td>boolean</td>
+            <td>Это ссылка на предыдущую страницу.</td>
+        </tr>
+        <tr>
+            <td>isNumeric()</td>
+            <td>boolean</td>
+            <td>Это нумерованная ссылка на страницу.</td>
+        </tr>
+        <tr>
+            <td>isCurrent()</td>
+            <td>boolean</td>
+            <td>Это ссылка на текущую страницу.</td>
+        </tr>
+        <tr>
+            <td>isNext()</td>
+            <td>boolean</td>
+            <td>Это ссылка на следующую страницу.</td>
+        </tr>
+        <tr>
+            <td>isNextGroup()</td>
+            <td>boolean</td>
+            <td>Это ссылка на следующую группу страниц.</td>
+        </tr>
+        <tr>
+            <td>isLast()</td>
+            <td>boolean</td>
+            <td>Это ссылка на последнюю страницу.</td>
+        </tr>
 	</tbody>
 </table>
 
-Also each page contains additional index, defining type of it.
+## Послесловие ##
 
-<table>
-	<thead>
-		<tr>
-			<th>Index</th>
-			<th>Means</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>is_first</td>
-			<td>This is link to first page.</td>
-		</tr>
-		<tr>
-			<td>is_previous_group</td>
-			<td>This is link to previous pages group.</td>
-		</tr>
-		<tr>
-			<td>is_previous</td>
-			<td>This is link to previous page.</td>
-		</tr>
-		<tr>
-			<td>is_numeric</td>
-			<td>This is numeric link to page.</td>
-		</tr>
-		<tr>
-			<td>is_current</td>
-			<td>This is link to current page. This type same contains index “is_numeric”.</td>
-		</tr>
-		<tr>
-			<td>is_next</td>
-			<td>This is link to next page.</td>
-		</tr>
-		<tr>
-			<td>is_next_group</td>
-			<td>This is link to next pages group.</td>
-		</tr>
-		<tr>
-			<td>is_last</td>
-			<td>This is link to last page.</td>
-		</tr>
-	</tbody>
-</table>
-
-## Afterword ##
-
-Example displaying pagination, using Twig:
+Пример вывода постраничной навигации с использованием Twig:
 
     {% if pagination %}
 	    <div>Current page is {{ pagination.current_page }}</div>
 	    <div>Showed from {{ pagination.start_show }} to {{ pagination.end_show }} - {{ pagination.limit }} items</div>
 	    <div>Total {{ pagination.total_records }} items on {{ pagination.total_pages }} pages</div>
 	    {% if pagination.pages %}
-		    <ul class="pagination float-group">
+		    <ul class="pagination">
 		    {% for page in pagination.pages %}
 			    <li{{ page.is_current ? ' class="active"' : ''}}>
 			    <a href="{{ page.href }}"{% for key,value in page.attributes %} {{ key }}="{{ value }}"{% endfor %}>{{ page.caption }}</a>
@@ -450,5 +315,4 @@ Example displaying pagination, using Twig:
 		    </ul>
 	    {% endif %}
     {% endif %}
-
-[Here](https://github.com/barinbritva/Pagination-Codeigniter) you can learn how to easy make AJAX pagination and see a demo.
+    
