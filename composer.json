@@ -1,0 +1,24 @@
+{
+	"name": "barinbritva/pagination",
+	"type": "library",
+	"description": "Pagination library for any PHP-project",
+	"keywords": ["pagination"],
+	"homepage": "https://github.com/barinbritva/php-pagination",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Barin Britva",
+			"email": "barinbritva@outlook.com",
+			"homepage": "http://barinbritva.ru",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.6.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"BarinBritva\\Pagination\\": "sources/"
+		}
+	}
+}
