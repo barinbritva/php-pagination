@@ -1,246 +1,188 @@
 php-pagination
 ================
 
-Класс постраничной навигации для любого PHP-проекта
+Библиотека постраничной навигации для любого PHP-проекта
 
 ## Installation and usage ##
 
-
-## Parameters of library ##
-
-The parameters of library are an array with next indexes:
-
-<table>
-	<thead>
-		<tr>
-			<th>Index of array</th>
-			<th>Type</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>db (*)</td>
-			<td>PDO object</td>
-			<td>PDO object for database connection. (Class work tested at MySQL and PostgreSQL connections.) <b>Required, if not indicated parameter db_config</b>.</td>
-		</tr>
-		<tr>
-			<td>db_config (*)</td>
-			<td>array</td>
-			<td>Array of keys-parameters for database connection. The parameter description is <a href="#the-parameter-for-database-connection-db_config">here</a>. <b>Required, if not indicated parameter db</b>.</td>
-		</tr>
-		<tr>
-			<td>table*</td>
-			<td>string</td>
-			<td>Table with needed records. <b>Required</b>.</td>
-		</tr>
-		<tr>
-			<td>url*</td>
-			<td>string</td>
-			<td>URL to page, where displaying records (for example: http://yoursite.com/news, /news/ or /news.php?page=). <b>Required</b>.</td>
-		</tr>
-		<tr>
-			<td>page</td>
-			<td>integer</td>
-			<td>Number of displaying page. <i>By default: 1</i>.</td>
-		</tr>
-		<tr>
-			<td>limit</td>
-			<td>integer</td>
-			<td>Amount of records at page. <i>By default: 10</i>.</td>
-		</tr>
-		<tr>
-			<td>pages_amount</td>
-			<td>integer or string</td>
-			<td>Amount of displaying pages on the right and on the left  from current page. <i>By default: 5</i>.</td>
-		</tr>
-		<tr>
-			<td>where</td>
-			<td>array</td>
-			<td>Array of criterias for records selection. The parameter description is <a href="#the-parameter-of-criterias-where">here</a>. <i>No value by default</i>.</td>
-		</tr>
-		<tr>
-			<td>with_pages</td>
-			<td>boolean</td>
-			<td>Specifies whether to generate the pagination links. The parameter may be required in case if needed to display random page without possibility move on (for example, as free demonstration materials of the website). <i>By default: true</i>.</td>
-		</tr>
-		<tr>
-			<td>except_first_last</td>
-			<td>boolean</td>
-			<td>If a parameter “with_pages” set as true, then this can except link to first and last pages. <i>By default: false</i>.</td>
-		</tr>
-		<tr>
-			<td>except_groups</td>
-			<td>boolean</td>
-			<td>If a parameter “with_pages” set as true, then this can except link to next and previous groups of pages. Group is set of current page and displaying pages on the left and on the right. <i>By default: false</i>.</td>
-		</tr>
-		<tr>
-			<td>except_next_previous</td>
-			<td>boolean</td>
-			<td>If a parameter “with_pages” set as true, then this can except link to next and previous pages. <i>By default: false</i></>.</td>
-		</tr>
-		<tr>
-			<td>except_numeric</td>
-			<td>boolean</td>
-			<td>If a parameter “with_pages” set as true, then this can except link to numeric pages. <i>By default: false</i>.</td>
-		</tr>
-		<tr>
-			<td>label_first</td>
-			<td>string</td>
-			<td>Label for a link to first page. <i>By default: <<<</i>.</td>
-		</tr>
-		<tr>
-			<td>label_last</td>
-			<td>string</td>
-			<td>Label for a link to last page. <i>By default: >>></i>.</td>
-		</tr>
-		<tr>
-			<td>label_next_group</td>
-			<td>string</td>
-			<td>Label for a link to next group of pages. <i>By default: >></i>.</td>
-		</tr>
-		<tr>
-			<td>label_previous_group</td>
-			<td>string</td>
-			<td>Label for a link to previous group of pages. <i>By default: <<</i>.</td>
-		</tr>
-		<tr>
-			<td>label_next</td>
-			<td>string</td>
-			<td>Label for a link to next page. <i>By default: ></i>.</td>
-		</tr>
-		<tr>
-			<td>label_previous</td>
-			<td>string</td>
-			<td>Label for a link to previous page. <i>By default: <</i>.</td>
-		</tr>
-		<tr>
-			<td>pages_attributes</td>
-			<td>array</td>
-			<td>Array of attributes for navigation links. May include any html-attributes, for example: id, class, data-attributes. The parameter description is <a href="#the-parameter-of-attributes-for-navigation-links-pages_attributes">here</a>. <i>No value by default</i>.</td>
-		</tr>
-	</tbody>
-</table>
-
-## Methods of library ##
-
-<table>
-	<thead>
-		<tr>
-			<th>Method</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>buildPages()</td>
-			<td>Generates group of pages. Uses in case if during initialization parameter “with_pages” did set as false.</td>
-		</tr>
-		<tr>
-			<td>get()</td>
-			<td>Returns pagination as an array of data.</td>
-		</tr>
-		<tr>
-			<td>getCurrentPage()</td>
-			<td>Returns number of current page.</td>
-		</tr>
-		<tr>
-			<td>getLimit()</td>
-			<td>Returns amount of records on page.</td>
-		</tr>
-		<tr>
-			<td>getPagesAmount()</td>
-			<td>Returns amount of pages, displaying on the right and on the left from current.</td>
-		</tr>
-		<tr>
-			<td>getStart()</td>
-			<td>Returns number of record, from which started show of page (numbering from zero).</td>
-		</tr>
-		<tr>
-			<td>getTotalRecords()</td>
-			<td>Returns total amount of records in table, considering criterias, if they did set.</td>
-		</tr>
-		<tr>
-			<td>getTotalPages()</td>
-			<td>Returns total amount of pages.</td>
-		</tr>
-		<tr>
-			<td>getPages()</td>
-			<td>Returns an array of current group of pages.</td>
-		</tr>
-		<tr>
-			<td>getStartShow()</td>
-			<td>Returns number of record, from which started show of page (numbering from one).</td>
-		</tr>
-		<tr>
-			<td>getEndShow()</td>
-			<td>Returns number of last displayed record.</td>
-		</tr>
-	</tbody>
-</table>
-
-## Array of pagination data ##
-
-Array of pagination data contains next indexes:
-
-<table>
-	<thead>
-		<tr>
-			<th>Index</th>
-			<th>Contains</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>current_page</td>
-			<td>Contains number of current page.</td>
-		</tr>
-		<tr>
-			<td>start</td>
-			<td>Contains number of record, from which started show of page (numbering from zero).</td>
-		</tr>
-		<tr>
-			<td>limit</td>
-			<td>Contains amount of records on page.</td>
-		</tr>
-		<tr>
-			<td>start_show</td>
-			<td>Contains number of record, from which started show of page (numbering from one).</td>
-		</tr>
-		<tr>
-			<td>end_show</td>
-			<td>Contains number of last displayed record.</td>
-		</tr>
-		<tr>
-			<td>total_records</td>
-			<td>Contains total amount of records in table, considering criterias, if they did set.</td>
-		</tr>
-		<tr>
-			<td>total_pages</td>
-			<td>Contains total amount of pages.</td>
-		</tr>
-		<tr>
-			<td>pages</td>
-			<td>Contains an array of current group of pages.</td>
-		</tr>
-	</tbody>
-</table>
-
-## Array of pages group ##
-
-Индекс массива навигации «pages» представляет собой массив, каждый элемент которого содержит объект <code>Page</code> со следующими методами:
+## Методы библиотеки ##
 
 <table>
 	<thead>
 		<tr>
 			<th>Метод</th>
-			<th>Тип возвращаемого заначения</th>
+			<th>Аргументы</th>
+			<th>Описание</th>
+			<th>Возвращаемое значение</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>
+        <td>setUrl($url)</td>
+        <td>$url: string</td>
+        <td>Установить ссылку на страницу, где происходит вывод записей (например: http://yoursite.com/news, /news/ или /news.php?page=).</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>getUrl()</td>
+        <td>-</td>
+        <td>Получить ссылку на страницу, где происходит вывод записей.</td>
+        <td>string</td>
+    </tr>
+    <tr>
+        <td>setPageLimit($limit)</td>
+        <td>$limit: integer</td>
+        <td>Установить количество видимых ссылок справа и слева от текущей. По умолчанию: 5.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>getPageLimit()</td>
+        <td>-</td>
+        <td>Получить количество видимых ссылок справа и слева от текущей.</td>
+        <td>string</td>
+    </tr>
+    <tr>
+        <td>excludeFirstLastLinks($flag)</td>
+        <td>$flag: boolean</td>
+        <td>Исключить ссылки на первую и последнюю страницы. По умолчанию: false.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>excludeGroupLinks($flag)</td>
+        <td>$flag: boolean</td>
+        <td>Исключить ссылки на следующую и предыдущую группы страниц. По умолчанию: false.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>excludeNextPreviousLinks($flag)</td>
+        <td>$flag: boolean</td>
+        <td>Исключить ссылки на следующую и предыдущую страницы. По умолчанию: false.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>excludeNumericLinks($flag)</td>
+        <td>$flag: boolean</td>
+        <td>Исключить ссылки на нумерованные страницы. По умолчанию: false.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setFirstLabel($label)</td>
+        <td>$label: string</td>
+        <td>Надпись для ссылки на первую страницу. По умолчанию: "<<".</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setLastLabel($label)</td>
+        <td>$label: string</td>
+        <td>Надпись для ссылки на последнюю страницу. По умолчанию: ">>".</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setNextGroupLabel($label)</td>
+        <td>$label: string</td>
+        <td>Надпись для ссылки на следующую группу страниц. По умолчанию: "..".</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setPreviousGroupLabel($label)</td>
+        <td>$label: string</td>
+        <td>Надпись для ссылки на предыдущую группу страниц. По умолчанию: "..".</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setNextLabel($label)</td>
+        <td>$label: string</td>
+        <td>Надпись для ссылки на следующую страницу. По умолчанию: ">".</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setPreviousLabel($label)</td>
+        <td>$label: string</td>
+        <td>Надпись для ссылки на предыдущую страницу. По умолчанию: "<".</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>setCurrentPage($page)</td>
+        <td>$page: integer</td>
+        <td>Установить номер отображаемой страницы. По умолчанию: 1.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>getCurrentPage()</td>
+        <td>-</td>
+        <td>Получить номер отображаемой страницы.</td>
+        <td>integer</td>
+    </tr>
+    <tr>
+        <td>setRecordLimit($limit)</td>
+        <td>$limit: integer</td>
+        <td>Установить количество записей, отображаемых на странице. По умолчанию: 10.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>getRecordLimit()</td>
+        <td>-</td>
+        <td>Получить количество записей, отображаемых на странице.</td>
+        <td>integer</td>
+    </tr>
+    <tr>
+        <td>getStart()</td>
+        <td>-</td>
+        <td>Возвращает номер записи, с которой начат показ страницы (нумерация ведётся с нуля).</td>
+        <td>int</td>
+    </tr>
+    <tr>
+        <td>setTotalRecords($total)</td>
+        <td>$total: integer</td>
+        <td>Установить общее количество всех записей.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>getTotalPages()</td>
+        <td>-</td>
+        <td>Получить общее количество всех записей.</td>
+        <td>integer</td>
+    </tr>
+    <tr>
+        <td>getPages()</td>
+        <td>-</td>
+        <td>Получить ссылки постраничной навигации.</td>
+        <td>Page[]</td>
+    </tr>
+    <tr>
+        <td>initialize()</td>
+        <td>-</td>
+        <td>Запустить генерацию постраничной навигации. Необходимо запускать после всех настроек объекта Pagination.</td>
+        <td>Pagination</td>
+    </tr>
+    <tr>
+        <td>getStartShow()</td>
+        <td>-</td>
+        <td>Получить номер записи, с которой начат показ страницы (нумерация ведётся с одного).</td>
+        <td>integer</td>
+    </tr>
+    <tr>
+        <td>getEndShow()</td>
+        <td>-</td>
+        <td>Получить номер последней выведенной записи.</td>
+        <td>integer</td>
+    </tr>
+	</tbody>
+</table>
+
+## Методы объекта Page  ##
+
+<table>
+	<thead>
+		<tr>
+			<th>Метод</th>
+			<th>Тип возвращаемого значения</th>
 			<th>Описание</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>getCaption()</td>
+			<td>getLabel()</td>
 			<td>string</td>
 			<td>Возвращает надпись для ссылки на страницу.</td>
 		</tr>

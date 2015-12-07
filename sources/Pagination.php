@@ -25,10 +25,18 @@ class Pagination {
 	private $pages = [];
 
 
+	/**
+	 * @return string
+	 */
 	public function getUrl() {
 		return $this->url;
 	}
 
+	/**
+	 * @param string $url
+	 *
+	 * @return $this
+	 */
 	public function setUrl($url) {
 		$this->url = (string)$url;
 		return $this;
@@ -64,32 +72,32 @@ class Pagination {
 	}
 
 	public function setFirstLabel($label) {
-		$this->firstLabel = $label;
+		$this->firstLabel = (string)$label;
 		return $this;
 	}
 
 	public function setLastLabel($label) {
-		$this->lastLabel = $label;
+		$this->lastLabel = (string)$label;
 		return $this;
 	}
 
 	public function setNextGroupLabel($label) {
-		$this->nextGroupLabel = $label;
+		$this->nextGroupLabel = (string)$label;
 		return $this;
 	}
 
 	public function setPreviousGroupLabel($label) {
-		$this->previousGroupLabel = $label;
+		$this->previousGroupLabel = (string)$label;
 		return $this;
 	}
 
 	public function setNextLabel($label) {
-		$this->nextLabel = $label;
+		$this->nextLabel = (string)$label;
 		return $this;
 	}
 
 	public function setPreviousLabel($label) {
-		$this->previousLabel = $label;
+		$this->previousLabel = (string)$label;
 		return $this;
 	}
 
@@ -97,7 +105,7 @@ class Pagination {
 		return $this->currentPage;
 	}
 
-	private function setCurrentPage($page) {
+	public function setCurrentPage($page) {
 		$page = (int)$page;
 
 		if ($page > 0) {
@@ -161,7 +169,6 @@ class Pagination {
 	public function initialize() {
 		$page = $this->getCurrentPage();
 		$limit = $this->getRecordLimit();
-
 		$totalRecords = $this->getTotalRecords();
 
 		$totalPages = (int)(($totalRecords - 1) / $limit) + 1;
@@ -202,7 +209,7 @@ class Pagination {
 		}
 
 		$page = $this->getCurrentPage();
-		$pagesAmount = $this->getPageLimit();
+		$pageLimit = $this->getPageLimit();
 
 		$needFirstAndLastLinks = !$this->excludeFirstLastLinks;
 		$needGroupLinks = !$this->excludeGroupLinks;
@@ -215,7 +222,7 @@ class Pagination {
 			}
 
 			if ($needGroupLinks) {
-				$previousGroup = $page - $pagesAmount - 1;
+				$previousGroup = $page - $pageLimit * 2 - 1;
 				if ($previousGroup > 0) {
 					$this->appendPage($this->previousGroupLabel, $previousGroup, Page::IS_PREVIOUS_GROUP);
 				}
@@ -227,7 +234,7 @@ class Pagination {
 		}
 
 		if ($needNumericLinks) {
-			for ($i = $pagesAmount; $i >= 1; $i--) {
+			for ($i = $pageLimit; $i >= 1; $i--) {
 				$numericPage = $page - $i;
 
 				if ($numericPage > 0) {
@@ -238,7 +245,7 @@ class Pagination {
 
 			$this->appendPage($page, $page, [Page::IS_NUMERIC, Page::IS_CURRENT]);
 
-			for ($i = 1; $i <= $pagesAmount; $i++) {
+			for ($i = 1; $i <= $pageLimit; $i++) {
 				$numericPage = $page + $i;
 
 				if ($numericPage <= $totalPages) {
@@ -253,7 +260,7 @@ class Pagination {
 			}
 
 			if ($needGroupLinks){
-				$nextGroup = $page + $pagesAmount + 1;
+				$nextGroup = $page + $pageLimit * 2 + 1;
 				if ($nextGroup <= $totalPages) {
 					$this->appendPage($this->nextGroupLabel, $nextGroup, Page::IS_NEXT_GROUP);
 				}

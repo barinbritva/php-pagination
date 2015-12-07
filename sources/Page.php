@@ -26,7 +26,7 @@ class Page
         self::IS_LAST,
     ];
 
-    private $caption;
+    private $label;
     private $number;
     private $href;
     private $isFirst = false;
@@ -41,9 +41,9 @@ class Page
     /**
      * @return string
      */
-    public function getCaption()
+    public function getLabel()
     {
-        return $this->caption;
+        return $this->label;
     }
 
     /**
@@ -127,18 +127,18 @@ class Page
     }
 
     /**
-     * @param string $caption
-     * @param int    $number
-     * @param string $href
+     * @param string    $label
+     * @param int       $number
+     * @param string    $href
      * @param int|int[] $flags
      *
      * @throw LogicException
      */
-    public function __construct($caption, $number, $href, $flags = null)
+    public function __construct($label, $number, $href, $flags = null)
     {
-        $this->caption = (string)$caption;
+        $this->label  = (string)$label;
         $this->number = (int)$number;
-        $this->href = (string)$href;
+        $this->href   = (string)$href;
 
         if ($flags !== null) {
             $flags = (array)$flags;
