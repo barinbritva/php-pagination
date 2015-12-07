@@ -3,6 +3,7 @@
 	"type": "library",
 	"description": "Pagination library for any PHP-project",
 	"keywords": ["pagination"],
+	"homepage": "https://github.com/barinbritva/php-pagination",
 	"license": "MIT",
 	"authors": [
 		{
