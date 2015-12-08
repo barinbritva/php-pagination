@@ -193,12 +193,12 @@ class Pagination {
 	public function getEndShow() {
 		$totalRecords = $this->getTotalRecords();
 
-		$lastRecordOnPage = $this->getCurrentPage() * $this->getRecordLimit() - 1;
+		$lastRecordOnPage = $this->getCurrentPage() * $this->getRecordLimit();
 		if ($lastRecordOnPage > $totalRecords) {
 			$lastRecordOnPage = $totalRecords;
 		}
 
-		return $this->getStart() + $lastRecordOnPage;
+		return $lastRecordOnPage;
 	}
 
 	private function buildPages() {

@@ -1,9 +1,32 @@
 php-pagination
 ================
 
-Библиотека постраничной навигации для любого PHP-проекта
+Библиотека постраничной навигации для любого PHP-проекта.
 
-## Installation and usage ##
+# Установка #
+
+<code>composer require barinbritva/pagination</code>
+
+# Минимальный пример использования #
+
+// todo описание использования
+
+## Пример вывода постраничной навигации с использованием Twig: ##
+
+    {% if pagination.pages %}
+	    <div>Текущая страница {{ pagination.currentPage }}</div>
+	    <div>Показано с {{ pagination.startShow }} по {{ pagination.endShow }}</div>
+	    <div>Всего {{ pagination.totalRecords }} записей на {{ pagination.totalPages }} страницах</div>
+            <ul class="pagination">
+            {% for page in pagination.pages %}
+                <li{{ page.isCurrent ? ' class="active"' : ''}}>
+                <a href="{{ page.href }}">{{ page.label }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+    {% endif %}
+
+# API #
 
 ## Методы библиотеки ##
 
@@ -238,23 +261,4 @@ php-pagination
         </tr>
 	</tbody>
 </table>
-
-## Послесловие ##
-
-Пример вывода постраничной навигации с использованием Twig:
-
-    {% if pagination %}
-	    <div>Current page is {{ pagination.current_page }}</div>
-	    <div>Showed from {{ pagination.start_show }} to {{ pagination.end_show }} - {{ pagination.limit }} items</div>
-	    <div>Total {{ pagination.total_records }} items on {{ pagination.total_pages }} pages</div>
-	    {% if pagination.pages %}
-		    <ul class="pagination">
-		    {% for page in pagination.pages %}
-			    <li{{ page.is_current ? ' class="active"' : ''}}>
-			    <a href="{{ page.href }}"{% for key,value in page.attributes %} {{ key }}="{{ value }}"{% endfor %}>{{ page.caption }}</a>
-			    </li>
-		    {% endfor %}
-		    </ul>
-	    {% endif %}
-    {% endif %}
     
