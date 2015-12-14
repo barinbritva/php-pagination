@@ -212,11 +212,19 @@ class Pagination {
 
 	public function getStartShow()
 	{
+		if ($this->getTotalPages() === 0) {
+			return 0;
+		}
+
 		return $this->getStart() + 1;
 	}
 
 	public function getEndShow()
 	{
+		if ($this->getTotalPages() === 0) {
+			return 0;
+		}
+		
 		$totalRecords = $this->getTotalRecords();
 
 		$lastRecordOnPage = $this->getCurrentPage() * $this->getRecordLimit();
