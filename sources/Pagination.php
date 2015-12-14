@@ -28,7 +28,8 @@ class Pagination {
 	/**
 	 * @return string
 	 */
-	public function getUrl() {
+	public function getUrl()
+	{
 		return $this->url;
 	}
 
@@ -37,56 +38,67 @@ class Pagination {
 	 *
 	 * @return $this
 	 */
-	public function setUrl($url) {
+	public function setUrl($url)
+	{
 		$this->url = (string)$url;
 		return $this;
 	}
 
-	public function getPageLimit() {
+	public function getPageLimit()
+	{
 		return $this->pageLimit;
 	}
 
-	public function setPageLimit($limit) {
+	public function setPageLimit($limit)
+	{
 		$this->pageLimit = (int)$limit;
 		return $this;
 	}
 
-	public function excludeFirstLastLinks($flag) {
+	public function excludeFirstLastLinks($flag)
+	{
 		$this->excludeFirstLastLinks = (bool)$flag;
 		return $this;
 	}
 
-	public function excludeGroupLinks($flag) {
+	public function excludeGroupLinks($flag)
+	{
 		$this->excludeGroupLinks = (bool)$flag;
 		return $this;
 	}
 
-	public function excludeNextPreviousLinks($flag) {
+	public function excludeNextPreviousLinks($flag)
+	{
 		$this->excludeNextPreviousLinks = (bool)$flag;
 		return $this;
 	}
 
-	public function excludeNumericLinks($flag) {
+	public function excludeNumericLinks($flag)
+	{
 		$this->excludeNumericLinks = (bool)$flag;
 		return $this;
 	}
 
-	public function setFirstLabel($label) {
+	public function setFirstLabel($label)
+	{
 		$this->firstLabel = (string)$label;
 		return $this;
 	}
 
-	public function setLastLabel($label) {
+	public function setLastLabel($label)
+	{
 		$this->lastLabel = (string)$label;
 		return $this;
 	}
 
-	public function setNextGroupLabel($label) {
+	public function setNextGroupLabel($label)
+	{
 		$this->nextGroupLabel = (string)$label;
 		return $this;
 	}
 
-	public function setPreviousGroupLabel($label) {
+	public function setPreviousGroupLabel($label)
+	{
 		$this->previousGroupLabel = (string)$label;
 		return $this;
 	}
@@ -96,16 +108,19 @@ class Pagination {
 		return $this;
 	}
 
-	public function setPreviousLabel($label) {
+	public function setPreviousLabel($label)
+	{
 		$this->previousLabel = (string)$label;
 		return $this;
 	}
 
-	public function getCurrentPage() {
+	public function getCurrentPage()
+	{
 		return $this->currentPage;
 	}
 
-	public function setCurrentPage($page) {
+	public function setCurrentPage($page)
+	{
 		$page = (int)$page;
 
 		if ($page > 0) {
@@ -115,11 +130,13 @@ class Pagination {
 		return $this;
 	}
 
-	public function getRecordLimit() {
+	public function getRecordLimit()
+	{
 		return $this->recordLimit;
 	}
 
-	public function setRecordLimit($limit) {
+	public function setRecordLimit($limit)
+	{
 		$limit = (int)$limit;
 
 		if ($limit > 0) {
@@ -129,11 +146,13 @@ class Pagination {
 		return $this;
 	}
 
-	public function getStart() {
+	public function getStart()
+	{
 		return $this->start;
 	}
 
-	private function setStart($start) {
+	private function setStart($start)
+	{
 		$start = (int)$start;
 
 		if ($start > 0) {
@@ -143,11 +162,13 @@ class Pagination {
 		return $this;
 	}
 
-	public function getTotalRecords() {
+	public function getTotalRecords()
+	{
 		return $this->totalRecords;
 	}
 
-	public function setTotalRecords($total) {
+	public function setTotalRecords($total)
+	{
 		$this->totalRecords = (int)$total;
 		return $this;
 	}
@@ -156,22 +177,25 @@ class Pagination {
 		return $this->totalPages;
 	}
 
-	private function setTotalPages($total) {
+	private function setTotalPages($total)
+	{
 		$this->totalPages = (int)$total;
 		return $this;
 	}
 
-	public function getPages() {
+	public function getPages()
+	{
 		return $this->pages;
 	}
 
 
-	public function initialize() {
+	public function initialize()
+	{
 		$page = $this->getCurrentPage();
 		$limit = $this->getRecordLimit();
 		$totalRecords = $this->getTotalRecords();
 
-		$totalPages = (int)(($totalRecords - 1) / $limit) + 1;
+		$totalPages = $totalRecords === 0 ? 0 : (int)(($totalRecords - 1) / $limit) + 1;
 
 		if ($page > $totalPages) {
 			$page = $totalPages;
@@ -186,11 +210,13 @@ class Pagination {
 		return $this;
 	}
 
-	public function getStartShow() {
+	public function getStartShow()
+	{
 		return $this->getStart() + 1;
 	}
 
-	public function getEndShow() {
+	public function getEndShow()
+	{
 		$totalRecords = $this->getTotalRecords();
 
 		$lastRecordOnPage = $this->getCurrentPage() * $this->getRecordLimit();
@@ -201,7 +227,8 @@ class Pagination {
 		return $lastRecordOnPage;
 	}
 
-	private function buildPages() {
+	private function buildPages()
+	{
 		$totalPages = $this->getTotalPages();
 
 		if ($totalPages === 0) {
@@ -274,7 +301,8 @@ class Pagination {
 		return $this;
 	}
 
-	private function appendPage($caption, $number, $flags) {
+	private function appendPage($caption, $number, $flags)
+	{
 		$this->pages[] = new Page($caption, $number, $this->getUrl().$number, $flags);
 		return $this;
 	}
